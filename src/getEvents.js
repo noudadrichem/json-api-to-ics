@@ -3,7 +3,7 @@ import log from '../log'
 import { createEvents } from 'ics'
 import moment from 'moment'
 
-const APIURL = 'https://indicium.hu/json/events'
+const APIURL = 'https://indicium.hu/json/events?page%5Bsize%5D=10000'
 
 const stripHTMLFromString = str => str.replace(/(<([^>]+)>)/ig,'').replace(/\n|\r/g, '')
 

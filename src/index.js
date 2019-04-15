@@ -1,19 +1,20 @@
-import express from 'express'
-import bodyParser from 'body-parser'
+import express, { Router } from 'express'
 
 import log from '../log'
 import { getEvents } from './getEvents'
 
 export default function initApp() {
   const app = express()
+  const router = Router()
 
-  getEvents()
-    .then(events => {
-      // perform magic with ICS feed here
-      log.info({ events })
-    })
+  router.get('/v1/ics', (req, res) => {
+    getEvents()
+      .then(events => {
+        res.send(events)
+      })
+  })
 
-  app.use(bodyParser.json())
+  app.use(router)
 
   const PORT = 9099 || process.env.PORT
   app.listen(PORT, () => log.info(`Data provided on http://localhost:${PORT}`))
