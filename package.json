@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js",
-    "build": "babel src -s -D -d dist --presets es2015,stage-0"
+    "build": "babel-node src -s -D -d dist --presets es2015,stage-0",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Noud Adrichem<info@noudadrichem.com>",
