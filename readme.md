@@ -13,9 +13,15 @@ npm install
 
 # run dev env
 npm run dev
+```
 
-# build dist files
-npm run build
+### Build
+```bash
+# build
+docker build -t jsonics .
+
+# run
+docker run -p 9099:[LOCALPORT] jsonics
 ```
 
 ### To do
