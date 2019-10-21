@@ -8,7 +8,7 @@ export default function initApp() {
   const router = Router()
 
   router.get('/v1/ics', (req, res) => {
-    getEvents()
+    getEvents(req)
       .then(events => {
         res.send(events)
       })
