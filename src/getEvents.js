@@ -28,11 +28,13 @@ function parseIndiciumAPIEventObject(eventObj) {
 }
 
 function getFilteredEvents(events, activeCategories) {
-  return events.filter(event => {
-    if (event.attributes.categories !== '') {
-      return event.attributes.categories.filter(cat => activeCategories.includes(cat)).length > 0;
-    }
-  })
+  return events
+    .filter(event => {
+      if (event.attributes.categories !== '') {
+        return event.attributes.categories.filter(cat => activeCategories.includes(cat)).length > 0;
+      }
+    })
+    .map(evt => parseIndiciumAPIEventObject(evt))
 }
 
 export function getEvents(req) {
@@ -41,7 +43,12 @@ export function getEvents(req) {
   return axios.get(APIURL)
     .then(response => {
       const eventObjects = response.data.data
-      const finalEventObjects = getFilteredEvents(eventObjects, categories.split(',')).map(evt => parseIndiciumAPIEventObject(evt))
+
+      const finalEventObjects = categories !== undefined
+        ? getFilteredEvents(eventObjects, categories.split(','))
+        : getFilteredEvents(eventObjects, ['SD', 'TI', 'SNE', 'BIM', 'AI'])
+
+      log.info({ finalEventObjects})
 
       return createEvents(finalEventObjects, (error, value) => {
         if(error) log.error({ error })
